@@ -8,7 +8,7 @@
 #include <sys/file.h>
 #include <syslog.h>
 #include <dlfcn.h>
-
+#include <signal.h>
 
 
 #include "cfg_read.h"
@@ -19,11 +19,12 @@
 
 #define LOG_NAME "qrngd"
 
+volatile sig_atomic_t qrngd_stop = 0;
+
 static int32_t rng_min_value = 0;
 static int32_t rng_max_value = 255;
 
 static int (*qrng_open)(const char *);
-static int (*qrng_rand_int32)(int32_t, int32_t, size_t, int32_t *);
 static void (*qrng_close)(void);
 static int (*qrng_rand_bytes)(size_t, uint8_t *);
 
@@ -50,6 +51,11 @@ static void write_random_data(int fd, size_t batch_size)
 
 }
 
+static void handle_sigterm(int signum) {
+    (void)signum;
+    syslog(LOG_INFO, "The Daemon shall stop!");
+    qrngd_stop = 1;
+}
 
 int main(int argc, char **argv)
 {
@@ -57,7 +63,6 @@ int main(int argc, char **argv)
     (void)argv;
 
     void *handle_qrng_provider = NULL;
-    
     int retval = 0;
 
     int nochdir = 0;
@@ -69,9 +74,16 @@ int main(int argc, char **argv)
  
     char rng_module[256] = {0};
     char *dlerrorstr = NULL;
+    
+    struct sigaction sa;
+    
     openlog(LOG_NAME, LOG_PID | LOG_NOWAIT | LOG_NDELAY, LOG_DAEMON);
     
+    memset(&sa, 0, sizeof(struct sigaction));
+    sa.sa_handler = handle_sigterm;
+    sigaction(SIGTERM, &sa, NULL);
 
+    syslog(LOG_INFO, "Registered SIGTERM to stop the daemon!");
 
     if (daemon(nochdir, noclose)) {
         syslog(LOG_CRIT, "No daemon was conjured! :(");
@@ -161,7 +173,7 @@ int main(int argc, char **argv)
 
     syslog(LOG_INFO, "Daemon connected to QRNG!");
     
-    while(1) {
+    while(!qrngd_stop) {
         struct stat st;
         // Lock the file for writing
         flock(fd, LOCK_EX);
