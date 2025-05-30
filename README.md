@@ -1,5 +1,5 @@
 # QRNGD
-[![CMake on a single platform](https://github.com/sebastianardelean/qrngd/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/sebastianardelean/qrngd/actions/workflows/cmake-single-platform.yml)
+[![Debian Build](https://github.com/sebastianardelean/qrngd/actions/workflows/build_deb.yml/badge.svg)](https://github.com/sebastianardelean/qrngd/actions/workflows/build_deb.yml)
 
 ## Build
 
