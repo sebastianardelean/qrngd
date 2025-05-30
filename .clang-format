@@ -15,7 +15,7 @@ SpacesBeforeTrailingComments: 1
 SpaceBeforeParens: ControlStatementsExceptControlMacros
 IndentCaseLabels: true
 AllowShortBlocksOnASingleLine: false
-AlwaysBreakAfterReturnType: TopLevel
+AlwaysBreakAfterReturnType: None
 SortIncludes: false
 
 # C-specific tweaks

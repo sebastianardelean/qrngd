@@ -25,8 +25,7 @@ static int (*qrng_open)(const char*);
 static void (*qrng_close)(void);
 static int (*qrng_rand_bytes)(size_t, uint8_t*);
 
-static void
-write_random_data(int fd, size_t batch_size) {
+static void write_random_data(int fd, size_t batch_size) {
     uint8_t* data = malloc(batch_size * sizeof(uint8_t));
     if (data) {
         if ((*qrng_rand_bytes)(batch_size, data) == 0) {
@@ -41,15 +40,13 @@ write_random_data(int fd, size_t batch_size) {
     free(data);
 }
 
-static void
-handle_sigterm(int signum) {
+static void handle_sigterm(int signum) {
     (void)signum;
     syslog(LOG_INFO, "The Daemon shall stop!");
     qrngd_stop = 1;
 }
 
-int
-main(int argc, char** argv) {
+int main(int argc, char** argv) {
     (void)argc;
     (void)argv;
 

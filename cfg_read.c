@@ -15,14 +15,12 @@ static config_t config;
 
 static const char cfg_file_path[] = "/usr/lib/qrng/qrngd.cnf";
 
-void
-yyerror(config_t* parm, const char* s) {
+void yyerror(config_t* parm, const char* s) {
     (void)parm;
     fprintf(stderr, "Error: %s\n", s);
 }
 
-int
-cfg_read_init(void) {
+int cfg_read_init(void) {
 
     if (check_file_exists(cfg_file_path, false) == false) {
         return -1;
@@ -34,8 +32,7 @@ cfg_read_init(void) {
     return 0;
 }
 
-int
-cfg_read_run(void) {
+int cfg_read_run(void) {
     FILE* fcfg   = fopen(cfg_file_path, "rb");
     char* buffer = 0;
 
@@ -67,27 +64,14 @@ cfg_read_run(void) {
     return 0;
 }
 
-void
-cfg_read_rng_module(char* rng_module) {
+void cfg_read_rng_module(char* rng_module) {
     strncpy(rng_module, config.rng_module, RNG_MODULE_NAME_MAX_SIZE);
 }
 
-void
-cfg_read_pool_size(size_t* pool_size) {
-    *pool_size = config.pool_file_size;
-}
+void cfg_read_pool_size(size_t* pool_size) { *pool_size = config.pool_file_size; }
 
-void
-cfg_read_chunk_size(size_t* chunk_size) {
-    *chunk_size = config.max_chunk_size;
-}
+void cfg_read_chunk_size(size_t* chunk_size) { *chunk_size = config.max_chunk_size; }
 
-void
-cfg_read_min_rng_value(int32_t* min_value) {
-    *min_value = config.min_rng_value;
-}
+void cfg_read_min_rng_value(int32_t* min_value) { *min_value = config.min_rng_value; }
 
-void
-cfg_read_max_rng_value(int32_t* max_value) {
-    *max_value = config.max_rng_value;
-}
+void cfg_read_max_rng_value(int32_t* max_value) { *max_value = config.max_rng_value; }
