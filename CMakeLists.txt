@@ -8,9 +8,9 @@ project(qrngd VERSION 1.0)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
-if (NOT OPENSSL_FOUND)
-  find_package(OpenSSL 3.0 REQUIRED)
-endif() 
+#if (NOT OPENSSL_FOUND)
+#  find_package(OpenSSL 3.0 REQUIRED)
+#endif() 
 
 
 
