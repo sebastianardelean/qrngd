@@ -15,20 +15,21 @@
 
 #define BUFFER_SIZE 4096
 
-
-int copy_file(const char *source, const char *destination) {
+int
+copy_file(const char* source, const char* destination) {
     int src_fd = open(source, O_RDONLY);
     if (src_fd < 0) {
         return -2;
     }
 
-    int dest_fd = open(destination, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    int dest_fd =
+        open(destination, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
     if (dest_fd < 0) {
         close(src_fd);
         return -3;
     }
 
-    char buffer[BUFFER_SIZE] = {0};
+    char    buffer[BUFFER_SIZE] = {0};
     ssize_t bytes_read = 0, bytes_written = 0;
 
     // Copying loop
@@ -44,33 +45,28 @@ int copy_file(const char *source, const char *destination) {
     // Close the file descriptors
     close(src_fd);
     close(dest_fd);
-    
-    return (bytes_read < 0) ? -1 : 0;  // Return 0 on success, -1 on failure
+
+    return (bytes_read < 0) ? -1 : 0; // Return 0 on success, -1 on failure
 }
 
-
-
-
-int create_directory_if_missing(const char *path)
-{
+int
+create_directory_if_missing(const char* path) {
     if (check_file_exists(path, true) == false) {
-        if(mkdir(path, S_IRUSR|S_IWUSR|S_IXUSR) ==-1) {
+        if (mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR) == -1) {
             return -1;
         }
-    }  
+    }
     return 0;
 }
 
-
-bool check_file_exists(const char *path, bool is_dir)
-{
+bool
+check_file_exists(const char* path, bool is_dir) {
     struct stat sb;
     if (is_dir == true) {
         if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode)) {
             return true;
         }
-    }
-    else {
+    } else {
         if (stat(path, &sb) == 0 && S_ISREG(sb.st_mode)) {
             return true;
         }
@@ -79,17 +75,17 @@ bool check_file_exists(const char *path, bool is_dir)
     return false;
 }
 
-int remove_file(const char *path)
-{
+int
+remove_file(const char* path) {
     if (remove(path) == 0) {
-        return 0; 
+        return 0;
     } else {
         return -1;
     }
 }
 
-int compare_file_size(const char *path, size_t max_size)
-{
+int
+compare_file_size(const char* path, size_t max_size) {
     struct stat st;
     if (stat(path, &st) != 0) {
         return 0;
