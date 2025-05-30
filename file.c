@@ -85,5 +85,5 @@ int compare_file_size(const char* path, size_t max_size) {
     if (stat(path, &st) != 0) {
         return 0;
     }
-    return st.st_size >= max_size;
+    return st.st_size >= (long int)max_size;
 }

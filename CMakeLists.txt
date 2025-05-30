@@ -67,3 +67,6 @@ target_link_libraries(qrngd PRIVATE CURL::libcurl)
 # Installation
 install(TARGETS qrngd DESTINATION /usr/bin)
 install(FILES qrngd.cnf DESTINATION /usr/lib/qrng)  # Creates /usr/lib/qrng and installs qrngd.cnf
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(${CMAKE_MODULE_PATH}/Packing.cmake)
