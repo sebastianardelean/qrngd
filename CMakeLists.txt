@@ -52,11 +52,11 @@ ${CMAKE_BINARY_DIR}  # Include generated headers
 find_library(QRNG_LIBRARY NAMES qrng PATHS /usr/local/lib)
 
 # Check if the library was found and link it
-if(QRNG_LIBRARY)
-  target_link_libraries(qrngd PRIVATE ${QRNG_LIBRARY})
-else()
-  message(FATAL_ERROR "libqrng not found!")
-endif()
+#if(QRNG_LIBRARY)
+#  target_link_libraries(qrngd PRIVATE ${QRNG_LIBRARY})
+#else()
+#  message(FATAL_ERROR "libqrng not found!")
+#endif()
 
 # Find libcurl
 find_package(CURL REQUIRED)
