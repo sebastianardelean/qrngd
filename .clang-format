@@ -1,20 +1,18 @@
-# .clang-format
-Language: C
-BasedOnStyle:    LLVM
+BasedOnStyle: LLVM
 
 # Customizations
-IndentWidth:     4
-TabWidth:        4
-UseTab:          Never
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
 
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
 AlignTrailingComments: true
 AllowShortIfStatementsOnASingleLine: false
 BreakBeforeBraces: Attach
-ColumnLimit:     100
+ColumnLimit: 100
 SpacesBeforeTrailingComments: 1
-SpaceBeforeParens: ControlStatements
+SpaceBeforeParens: ControlStatementsExceptControlMacros
 IndentCaseLabels: true
 AllowShortBlocksOnASingleLine: false
 AlwaysBreakAfterReturnType: TopLevel
@@ -22,5 +20,3 @@ SortIncludes: false
 
 # C-specific tweaks
 PointerAlignment: Left
-Cpp11BracedListStyle: false
-
