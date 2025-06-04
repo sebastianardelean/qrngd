@@ -40,7 +40,7 @@ static void write_random_data(int fd, size_t batch_size) {
     free(data);
 }
 
-static void handle_sigterm(int signum) {
+static void handle_signals(int signum) {
     (void)signum;
     syslog(LOG_INFO, "The Daemon shall stop!");
     qrngd_stop = 1;
@@ -67,9 +67,9 @@ int main(int argc, char** argv) {
     openlog(LOG_NAME, LOG_PID | LOG_NOWAIT | LOG_NDELAY, LOG_DAEMON);
 
     memset(&sa, 0, sizeof(struct sigaction));
-    sa.sa_handler = handle_sigterm;
+    sa.sa_handler = handle_signals;
     sigaction(SIGTERM, &sa, NULL);
-
+    sigaction(SIGINT, &sa, NULL);
     syslog(LOG_INFO, "Registered SIGTERM to stop the daemon!");
 
     if (daemon(nochdir, noclose)) {
